@@ -7,8 +7,9 @@ class GitBranchName(jiraTaskName: String) {
 
   private def toKebabCaseWithoutTags(value: String) = {
     value
-      .replaceAll("\\[.*\\]", "")
-      .replaceAll("[\\s]{2,}", " ")
+      .replaceAll("\\[.*\\]", "")    // remove "tag"
+      .replaceAll("[^\\w\\s-]", "")  // remove non-word characters
+      .replaceAll("[\\s]{2,}", " ")  // remove all duplicated whitespaces
       .trim()
       .replaceAll(" ", "-")
       .toLowerCase()
