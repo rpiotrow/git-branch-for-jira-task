@@ -42,6 +42,12 @@ $ git-branch-for-jira-task "  ABC-1   Make a new awesome  feature "
 git checkout -b 'feature/ABC-1-make-a-new-awesome-feature'
 ```
 
+Use custom issue delimiter and create bugfix branch:
+```shell script
+$ git-branch-for-jira-task -b -d "-<+>-"  "ABC-1   Make a new awesome  feature for star wars fans "
+git checkout -b 'bugfix/ABC-1-<+>-make-a-new-awesome-feature-for-star-wars-fans'
+```
+
 ## Used libraries
 
 There are no dependencies currently. [MUnit](https://scalameta.org/munit/) was used as testing framework.

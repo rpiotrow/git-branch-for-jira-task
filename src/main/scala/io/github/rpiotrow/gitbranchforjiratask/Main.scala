@@ -8,7 +8,8 @@ object Main extends App {
 
   case class Config(
     jiraTaskName: String = "",
-    branchType: BranchType = FeatureBranch
+    branchType: BranchType = FeatureBranch,
+    issueDelimiter: String = "-"
   )
 
   val parser = new scopt.OptionParser[Config]("git-branch-for-jira-task") {
@@ -19,6 +20,10 @@ object Main extends App {
     arg[String]("<jiraTaskName>")
       .text("Jira task name for which git branch needs to be created")
       .action((x, c) => c.copy(jiraTaskName = x))
+
+    opt[String]('d', "issueDelimiter")
+      .action((x, c) => c.copy(issueDelimiter = x))
+      .text("issue delimiter ('-' if not provided)")
 
     opt[Unit]('f', "feature")
       .action((_, c) => c.copy(branchType = FeatureBranch))
@@ -31,9 +36,9 @@ object Main extends App {
 
   parser.parse(args, Config()) match {
     case Some(config) =>
-      println(s"git checkout -b '${config.branchType.prefix}/${GitBranchName(config.jiraTaskName).produce()}'")
+      println(s"git checkout -b '${config.branchType.prefix}/${GitBranchName(config.jiraTaskName, config.issueDelimiter).produce()}'")
     case None =>
-      // arguments are bad, error message will have been displayed
+      // arguments are bad, error message have been displayed
   }
 
 }

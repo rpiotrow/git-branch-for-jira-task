@@ -2,7 +2,7 @@ package io.github.rpiotrow.gitbranchforjiratask
 
 import java.util.regex.Pattern
 
-class GitBranchName(jiraTaskName: String) {
+class GitBranchName(jiraTaskName: String, issueDelimiter: String) {
   private val withIssuePattern = Pattern.compile("([\\s]*[\\w]+-[\\d]+[\\s]*)(.*)")
 
   private def toKebabCaseWithoutTags(value: String) = {
@@ -20,7 +20,7 @@ class GitBranchName(jiraTaskName: String) {
     if (withIssueMatcher.matches()) {
       val issue = withIssueMatcher.group(1)
       val description = withIssueMatcher.group(2)
-      issue.trim() + "-" + toKebabCaseWithoutTags(description)
+      issue.trim() + issueDelimiter + toKebabCaseWithoutTags(description)
     } else {
       toKebabCaseWithoutTags(jiraTaskName)
     }
@@ -28,5 +28,6 @@ class GitBranchName(jiraTaskName: String) {
 }
 
 object GitBranchName {
-  def apply(jiraTaskName: String): GitBranchName = new GitBranchName(jiraTaskName)
+  def apply(jiraTaskName: String, issueDelimiter: String): GitBranchName =
+    new GitBranchName(jiraTaskName, issueDelimiter)
 }
