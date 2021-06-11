@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.5",
     libraryDependencies ++= Seq(
       "com.github.scopt" %%% "scopt" % "4.0.1",
-      "org.scalameta"    %%  "munit" % "0.7.3" % Test
+      "org.scalameta"    %%% "munit" % "0.7.26" % Test
     ),
   )
 
